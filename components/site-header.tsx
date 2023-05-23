@@ -5,6 +5,10 @@ import { Button, buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
+import SignupButton from "@/app/signup/components/SignupButton"
+import LoginButton from '../app/login/components/LoginButton';
+
+
 
 export function SiteHeader() {
   return (
@@ -13,12 +17,8 @@ export function SiteHeader() {
         <MainNav items={siteConfig.mainNav} />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-            <Button>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button variant="outline">
-              <Link href="/login">Sign Up</Link>
-            </Button>
+            <LoginButton/>
+            <SignupButton/>
 
             <Link
               href={siteConfig.links.github}

@@ -8,6 +8,8 @@ import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
+import Provider from "./Provider"
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -27,9 +29,10 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
+  session:any
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children,session }: RootLayoutProps) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -41,11 +44,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-            </div>
-            <TailwindIndicator />
+            <Provider session={session}>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1">{children}</div>
+              </div>
+              <TailwindIndicator />
+            </Provider>
           </ThemeProvider>
         </body>
       </html>

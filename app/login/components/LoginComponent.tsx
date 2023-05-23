@@ -1,5 +1,8 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
+import { signIn, signOut, useSession } from "next-auth/react"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -14,12 +17,24 @@ import { Label } from "@/components/ui/label"
 import { Icons } from "@/components/icons"
 
 export default function DemoCreateAccount() {
+  const email = useRef("")
+  const password = useRef("")
+
+  const loginHandler = async () => {
+    const result = await signIn("credentials", {
+      email: email.current,
+      password: password.current,
+      redirect: true,
+      callbackUrl: "/",
+    })
+  }
+
   return (
     <Card>
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Create an account</CardTitle>
+        <CardTitle className="text-2xl">Log In</CardTitle>
         <CardDescription>
-          Enter your email below to create your account
+          Enter your email or username below to login
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
@@ -43,17 +58,28 @@ export default function DemoCreateAccount() {
             </span>
           </div>
         </div>
+
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" />
+          <Input
+            onChange={(e) => (email.current = e.target.value)}
+            id="email"
+            type="email"
+          />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" />
+          <Input
+            onChange={(e) => (password.current = e.target.value)}
+            id="password"
+            type="password"
+          />
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Create account</Button>
+        <Button onClick={loginHandler} className="w-full">
+          Log In
+        </Button>
       </CardFooter>
     </Card>
   )
