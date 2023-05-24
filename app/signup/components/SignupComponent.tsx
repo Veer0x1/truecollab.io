@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import { signIn } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +20,16 @@ export default function SignupComponent() {
   const username = useRef("")
   const email = useRef("")
   const password = useRef("")
+
+  const signupHandler = async () => {
+    const result = await signIn("credentials", {
+      username: username.current,
+      email: email.current,
+      password: password.current,
+      redirect: true,
+      callbackUrl: "/",
+    })
+  }
   return (
     <Card>
       <CardHeader className="space-y-1">
@@ -33,7 +44,7 @@ export default function SignupComponent() {
             <Icons.gitHub className="mr-2 h-4 w-4" />
             Github
           </Button>
-          <Button variant="outline">
+          <Button onClick={()=>{signIn()}} variant="outline">
             <Icons.google className="mr-2 h-4 w-4" />
             Google
           </Button>
@@ -75,7 +86,9 @@ export default function SignupComponent() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Create account</Button>
+        <Button onClick={signupHandler} className="w-full">
+          Create account
+        </Button>
       </CardFooter>
     </Card>
   )

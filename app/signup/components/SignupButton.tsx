@@ -17,9 +17,8 @@ export default function SignupButton() {
         </>
       ) : (
         <>
-          <Button variant="outline" onClick={() => signIn()}>
-            Sign Up
-            {/* <Link>Sign Up</Link> */}
+          <Button variant="outline">
+            <Link href={"/signup"}>Sign Up</Link>
           </Button>
         </>
       )}
