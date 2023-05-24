@@ -39,11 +39,11 @@ export default function DemoCreateAccount() {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid grid-cols-2 gap-6">
-          <Button variant="outline">
+          <Button onClick={()=>signIn('github',{redirect:true,callbackUrl:"/"})} variant="outline">
             <Icons.gitHub className="mr-2 h-4 w-4" />
             Github
           </Button>
-          <Button variant="outline">
+          <Button onClick={()=>signIn('google',{redirect:true,callbackUrl:"/"})} variant="outline">
             <Icons.google className="mr-2 h-4 w-4" />
             Google
           </Button>
