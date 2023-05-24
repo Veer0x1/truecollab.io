@@ -1,5 +1,7 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 const handler = NextAuth({
   providers: [
@@ -33,6 +35,7 @@ const handler = NextAuth({
         const user = await res.json()
 
         if (user) {
+          console.log(user)
           // Any object returned will be saved in `user` property of the JWT
           return user
         } else {
@@ -43,14 +46,38 @@ const handler = NextAuth({
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!
+    })
   ],
-  pages:{
-    signIn:"/login"
+  callbacks:{
+    jwt: async ({ token, user }) => {
+      user && (token.user = user)
+      return token
   },
-  session:{
+  session: async ({ session, token }) => {
+      session.user = token.user!
+      return session
+  },
+  // async signIn({ account, profile }) {
+  //   if (account?.provider === "google") {
+  //     return profile?.email_verified && profile.email.endsWith("@example.com")
+  //   }
+  //   return true // Do different verification for other providers that don't have `email_verified`
+  // }
+  },
+  pages: {
+    signIn: "/login",
+  },
+  session: {
     //for storing our session, we have two option to store it in database or in cookies
-    strategy:"jwt"
-  }
+    strategy: "jwt",
+  },
 })
 
 export { handler as GET, handler as POST }
