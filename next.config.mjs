@@ -12,6 +12,10 @@ const nextConfig = {
     GOOGLE_CLIENT_SECRET:process.env.GOOGLE_CLIENT_SECRET,
     GITHUB_ID:process.env.GITHUB_ID,
     GITHUB_SECRET:process.env.GITHUB_SECRET
+  },
+  webpack(config) {
+    config.experiments = { ...config.experiments, topLevelAwait: true }
+    return config
   }
 }
 

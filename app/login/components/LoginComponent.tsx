@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { useRef } from "react"
+import { signIn } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -39,11 +39,21 @@ export default function DemoCreateAccount() {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid grid-cols-2 gap-6">
-          <Button onClick={()=>signIn('github',{redirect:true,callbackUrl:"/"})} variant="outline">
+          <Button
+            onClick={() =>
+              signIn("github", { redirect: true, callbackUrl: "/" })
+            }
+            variant="outline"
+          >
             <Icons.gitHub className="mr-2 h-4 w-4" />
             Github
           </Button>
-          <Button onClick={()=>signIn('google',{redirect:true,callbackUrl:"/"})} variant="outline">
+          <Button
+            onClick={() =>
+              signIn("google", { redirect: true, callbackUrl: "/" })
+            }
+            variant="outline"
+          >
             <Icons.google className="mr-2 h-4 w-4" />
             Google
           </Button>
