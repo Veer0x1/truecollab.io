@@ -45,6 +45,9 @@ const handler = NextAuth({
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
+      //here user is the user object that we get from the authorize function
+      //we are assigning the user object to the token object so that we can access it in the session
+
       user && (token.user = user)
       return token
     },
